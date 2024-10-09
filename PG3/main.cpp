@@ -1,10 +1,8 @@
-﻿#include <stdio.h>
-//#include <Windows.h>
+#include <stdio.h>
 
 int main() {
 
-	//SetConsoleOutputCP(65001);
-	printf("ああああ");
+	printf("プロジェクトセカイ");
 
 	return 0;
 }
