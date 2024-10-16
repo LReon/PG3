@@ -1,45 +1,36 @@
 #include <stdio.h>
+#include <Windows.h>
+#include <stdlib.h>
+#include <time.h>
 
-int Recursive(int recursiveWage,int hours,int recursiveTotal,int total,int wage
-) {
-
-	total = wage * hours;
-
-	recursiveTotal += recursiveWage;
-
-	if (total < recursiveTotal) {
-
-		printf("再帰の給料と時間　給料=%d,時給=%d,時間=%d\n", recursiveTotal, recursiveWage, hours);
-
-		printf("一般の給料と時間　給料=%d,時給=%d,時間=%d\n", total, wage, hours);
-
-		return 0;
-
-	}
-	else {
-
-		printf("再帰の給料と時間　給料=%d,時給=%d,時間=%d\n", recursiveTotal, recursiveWage, hours);
-
-		printf("一般の給料と時間　給料=%d,時給=%d,時間=%d\n", total, wage, hours);
-
-		printf("\n");
-
-		return Recursive(recursiveWage * 2 - 50, hours + 1, recursiveTotal, total, wage);
-
+typedef void (*T)(int);
+void Answer(int a) {
+	printf("%d!\n", a);
+}
+void SetWait(T x, int answer) {
+	for (int i = 0; i < 3; i++) {
+		printf("・");
+		Sleep(500);
 	}
 
-};
-
+	x(answer);
+}
 
 int main() {
-
-	int hours_ = 1;
-	int wage_ = 1072;
-	int recursiveWage_ = 100;
-	int total_ = 0;
-	int recursiveTotal_ = 0;
-
-	Recursive(recursiveWage_, hours_, recursiveTotal_, total_,wage_);
+	unsigned int currentTime = time(nullptr);
+	srand(currentTime);
+	int answer = rand() % 6 + 1;
+	int x;
+	printf("偶数なら0\n奇数なら1\n");
+	scanf_s("%d", &x);
+	printf("\n答えは");
+	SetWait(Answer, answer);
+	if (answer % 2 == x) {
+		printf("正解!");
+	}
+	else {
+		printf("不正解");
+	}
 
 	return 0;
 }
