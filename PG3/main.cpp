@@ -1,24 +1,45 @@
 #include <stdio.h>
 
-int Recursive(int hours) {
+int Recursive(int recursiveWage,int hours,int recursiveTotal,int total,int wage
+) {
 
-	if (hours <= 1) {
-		return 100;
+	total = wage * hours;
+
+	recursiveTotal += recursiveWage;
+
+	if (total < recursiveTotal) {
+
+		printf("再帰の給料と時間　給料=%d,時給=%d,時間=%d\n", recursiveTotal, recursiveWage, hours);
+
+		printf("一般の給料と時間　給料=%d,時給=%d,時間=%d\n", total, wage, hours);
+
+		return 0;
+
 	}
-	
-	return (hours * Recursive(hours * 2 - 50));
-	
+	else {
+
+		printf("再帰の給料と時間　給料=%d,時給=%d,時間=%d\n", recursiveTotal, recursiveWage, hours);
+
+		printf("一般の給料と時間　給料=%d,時給=%d,時間=%d\n", total, wage, hours);
+
+		printf("\n");
+
+		return Recursive(recursiveWage * 2 - 50, hours + 1, recursiveTotal, total, wage);
+
+	}
+
 };
 
 
 int main() {
 
-	int hours = 3;
-	int result;
+	int hours_ = 1;
+	int wage_ = 1072;
+	int recursiveWage_ = 100;
+	int total_ = 0;
+	int recursiveTotal_ = 0;
 
-	result = Recursive(hours);
-
-	printf("%d = %d", hours, result);
+	Recursive(recursiveWage_, hours_, recursiveTotal_, total_,wage_);
 
 	return 0;
 }
