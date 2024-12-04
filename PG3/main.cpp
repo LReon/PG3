@@ -1,34 +1,63 @@
-#include <stdio.h>
-#include <Windows.h>
-#include <stdlib.h>
-#include <time.h>
-#include <functional>
+#include <iostream>
+using namespace std;
 
 
-void SetTimeout(std::function<void(int)>a,int answer) {
-	for (int i = 0; i < 3; i++) {
-		printf(",");
-		Sleep(500);
-	}
-	a(answer);
+// 自作クラス
+class MyClass {
+public:
+	void Update();
+	void Approach();
+	void Attack();
+	void Escape();
+
+	// メンバ関数ポインタのテーブル
+	static void (MyClass::* table[])();
+
+private:
+	// メンバ関数ポインタのテーブルを参照するインデックス
+	int index = 0;
+};
+
+void MyClass::Approach() {
+	cout << "敵の接近！" << endl;
 }
 
-int main() {
-	unsigned int currentTime = time(nullptr);
-	srand(currentTime);
-	int answer = rand() % 6 + 1;
-	std::function<void(int)> functionAnswer = [](int a) { printf("%d!\n", a); };
-	int a;
-	printf("偶数なら0\n奇数なら1\n");
-	scanf_s("%d", &a);
-	printf("\n答えは");
-	SetTimeout(functionAnswer, answer);
-	if (answer % 2 == a) {
-		printf("正解!");
-	}
-	else {
-		printf("不正解");
+void MyClass::Attack() {
+	cout << "敵の攻撃！" << endl;
+}
+
+void MyClass::Escape() {
+	cout << "敵の離脱！" << endl;
+}
+
+void MyClass::Update() {
+
+	// 関数ポインタのテーブルから関数を実行
+	(this->*table[index])();
+	index++;
+	if (index >= 3) {
+		index = 0;
 	}
 
+}
+
+// static宣言したメンバ関数ポインタテーブルの実体
+void (MyClass::* MyClass::table[])() = {
+  &MyClass::Approach,	// インデックス番号0
+  &MyClass::Attack,	// インデックス番号1
+  &MyClass::Escape	// インデックス番号2
+};
+
+
+int main()
+{
+	MyClass my;
+	int number = 0;
+	
+	while (number == 0) {
+		my.Update();
+		printf("0なら継続、2なら終了\n");
+		scanf_s("%d", &number);
+	}
 	return 0;
 }
