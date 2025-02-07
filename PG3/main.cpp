@@ -1,62 +1,42 @@
 #include <iostream>
-using namespace std;
 
-// 自作クラス
-class MyClass {
+//クラステンプレート
+template <typename Type, typename Type2>
+class TemplateClass {
 public:
-	void Update();
-	void Approach();
-	void Attack();
-	void Escape();
+    // コンストラクタ
+    TemplateClass(Type number1, Type2 number2) :
+        Number1(number1), Number2(number2) {
+    }
 
-	// メンバ関数ポインタのテーブル
-	static void (MyClass::* table[])();
+    Type Min()
+    {
+        if (Number1 < Number2)
+            return static_cast<Type>(Number1);
+        else
+            return static_cast<Type>(Number2);
+    }
 
 private:
-	// メンバ関数ポインタのテーブルを参照するインデックス
-	int index = 0;
+    Type Number1;
+    Type2 Number2;
 };
 
-void MyClass::Approach() {
-	cout << "敵の接近！" << endl;
-}
+int main() {
 
-void MyClass::Attack() {
-	cout << "敵の攻撃！" << endl;
-}
+    TemplateClass<int, float> intFloatTemplate(100, 50.0f);
+    TemplateClass<int, double> intDoubleTemplate(80, 20.0);
+    TemplateClass<float, int> floatIntTemplate(2.0f, 18);
+    TemplateClass<float, double> floatDoubleTemplate(11.0f, 3.5);
+    TemplateClass<double, int> doubleIntTemplate(234.0, 123);
+    TemplateClass<double, float> doubleFloatTemplate(400.1, 500.2f);
 
-void MyClass::Escape() {
-	cout << "敵の離脱！" << endl;
-}
+    std::cout << "int(100)　と float(50.0f) を比べて小さい数字を返す：" << intFloatTemplate.Min() << std::endl;
+    std::cout << "int(80)　と double(20.0) を比べて小さい数字を返す：" << intDoubleTemplate.Min() << std::endl;
+    std::cout << "float(2.0f)　と int(18) を比べて小さい数字を返す：" << floatIntTemplate.Min() << std::endl;
+    std::cout << "float(11.0f)　と double(3.5) を比べて小さい数字を返す：" << floatDoubleTemplate.Min() << std::endl;
+    std::cout << "double(234.0)　と int(123) を比べて小さい数字を返す：" << doubleIntTemplate.Min() << std::endl;
+    std::cout << "double(400.1)　と float(500.2) を比べて小さい数字を返す：" << doubleFloatTemplate.Min() << std::endl;
 
-void MyClass::Update() {
-
-	// 関数ポインタのテーブルから関数を実行
-	(this->*table[index])();
-	index++;
-	if (index >= 3) {
-		index = 0;
-	}
-
-}
-
-// static宣言したメンバ関数ポインタテーブルの実体
-void (MyClass::* MyClass::table[])() = {
-  &MyClass::Approach,	// インデックス番号0
-  &MyClass::Attack,	// インデックス番号1
-  &MyClass::Escape	// インデックス番号2
-};
-
-
-int main()
-{
-	MyClass my;
-	int number = 0;
-	
-	while (number == 0) {
-		my.Update();
-		printf("0なら継続、それ以外なら終了\n");
-		scanf_s("%d", &number);
-	}
-	return 0;
+    return 0;
 }
