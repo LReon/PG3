@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-
 // 自作クラス
 class MyClass {
 public:
@@ -56,7 +55,7 @@ int main()
 	
 	while (number == 0) {
 		my.Update();
-		printf("0なら継続、2なら終了\n");
+		printf("0なら継続、それ以外なら終了\n");
 		scanf_s("%d", &number);
 	}
 	return 0;
